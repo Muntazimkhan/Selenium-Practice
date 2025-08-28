@@ -7,7 +7,7 @@ on:
     branches: [ master, main ]
   workflow_dispatch: {}
   schedule:
-    - cron: '50 5 * * *' # Runs daily at 10:50 AM PKT
+    - cron: '50 5 * * *' # Daily at 10:50 AM PKT
 
 jobs:
   test:
@@ -30,15 +30,15 @@ jobs:
       - name: Show Chrome version
         run: chrome --version
 
-      - name: Build project
-        run: mvn -B -DskipTests package
+      - name: Build the project
+        run: mvn -B clean compile
 
-      - name: Run ALL Selenium tests automatically
+      - name: Run ALL Selenium scripts automatically
         run: |
-          echo "🔍 Searching for all Selenium tests..."
+          echo "🔍 Searching for Selenium scripts..."
           set -e
-          classes=$(find src/test -name "*.java" | sed 's#src/test/##; s#/#.#g; s#\.java$##')
+          classes=$(find src/test/java -name "*.java" | sed 's#src/test/java/##; s#/#.#g; s#\.java$##')
           for cls in $classes; do
             echo "▶ Running $cls..."
-            xvfb-run -a mvn -q exec:java -Dexec.mainClass="$cls"
+            xvfb-run -a mvn -q exec:java -Dexec.mainClass="$cls" -Dexec.classpathScope=test
           done
