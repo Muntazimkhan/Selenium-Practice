@@ -1,29 +1,61 @@
-### IntelliJ IDEA ###
+# ---- Java / Build outputs ----
+*.class
+target/
+build/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
-### Eclipse ###
+# Maven
+.mvn/timing.properties
+dependency-reduced-pom.xml
+
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# ---- IDEs ----
+# IntelliJ / Android Studio
+.idea/
+*.iml
+# Eclipse (you already had most)
 .apt_generated
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
 .sts4-cache
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
-
-### NetBeans ###
+# NetBeans (you already had)
+.nb-gradle/
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
-/.nb-gradle/
 
-### VS Code ###
+# VS Code (already added)
 .vscode/
 
-### Mac OS ###
+# ---- Drivers / binaries ----
+chromedriver*/**
+geckodriver*/**
+*.exe
+*.dll
+
+# ---- Logs / reports ----
+*.log
+hs_err_pid*.log
+
+# ---- Env / secrets ----
+.env
+.env.*
+*.credentials
+*.keystore
+
+# ---- OS cruft ----
 .DS_Store
+Thumbs.db
+desktop.ini
