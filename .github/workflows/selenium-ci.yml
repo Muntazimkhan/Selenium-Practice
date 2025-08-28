@@ -6,20 +6,15 @@ on:
   pull_request:
     branches: [ master, main ]
   workflow_dispatch: {}
-  # Daily at 10:50 AM Pakistan (UTC+5 = 05:50 UTC)
   schedule:
-    - cron: '50 5 * * *'
-
-concurrency:
-  group: selenium-${{ github.ref }}
-  cancel-in-progress: false
+    - cron: '50 5 * * *' # Runs daily at 10:50 AM PKT
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Java 17
@@ -35,22 +30,15 @@ jobs:
       - name: Show Chrome version
         run: chrome --version
 
-      # If you already run headless in code, this still works.
-      # xvfb-run provides a virtual display so non-headless tests don't fail in CI.
-      - name: Run tests (Maven)
-        env:
-          # expose any secrets you use in tests (optional)
-          VALID_EMAIL: ${{ secrets.VALID_EMAIL }}
-          VALID_PASSWORD: ${{ secrets.VALID_PASSWORD }}
-        run: xvfb-run -a mvn -B -DskipTests=false test
+      - name: Build project
+        run: mvn -B -DskipTests package
 
-      - name: Upload test reports & screenshots
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-artifacts
-          path: |
-            target/surefire-reports/**
-            target/failsafe-reports/**
-            **/screenshots/**
-            **/reports/**
+      - name: Run ALL Selenium tests automatically
+        run: |
+          echo "🔍 Searching for all Selenium tests..."
+          set -e
+          classes=$(find src/test -name "*.java" | sed 's#src/test/##; s#/#.#g; s#\.java$##')
+          for cls in $classes; do
+            echo "▶ Running $cls..."
+            xvfb-run -a mvn -q exec:java -Dexec.mainClass="$cls"
+          done
