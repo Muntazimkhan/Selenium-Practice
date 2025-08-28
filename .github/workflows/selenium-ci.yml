@@ -34,11 +34,27 @@ jobs:
         run: mvn -B clean compile
 
       - name: Run ALL Selenium scripts automatically
+        shell: bash
         run: |
-          echo "🔍 Searching for Selenium scripts..."
-          set -e
-          classes=$(find src/test/java -name "*.java" | sed 's#src/test/java/##; s#/#.#g; s#\.java$##')
-          for cls in $classes; do
-            echo "▶ Running $cls..."
-            xvfb-run -a mvn -q exec:java -Dexec.mainClass="$cls" -Dexec.classpathScope=test
+          set -euo pipefail
+          echo "🔍 Searching for Selenium scripts (classes with main()) in src/test/java..."
+
+          # find only classes that define a main()
+          mapfile -t files < <(grep -R --include='*.java' -l 'public static void main' src/test/java || true)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "❌ No Java files with main() found under src/test/java"
+            exit 1
+          fi
+
+          # compile so everything is on the test classpath
+          mvn -B -DskipTests compile
+
+          # run each class using full plugin coords (works even without POM changes)
+          for f in "${files[@]}"; do
+            pkg=$(grep -m1 '^package ' "$f" | sed 's/^package \([^;]*\);.*/\1/')
+            base=$(basename "$f" .java)
+            if [ -n "$pkg" ]; then cls="$pkg.$base"; else cls="$base"; fi
+            echo "▶ Running $cls"
+            xvfb-run -a mvn -q org.codehaus.mojo:exec-maven-plugin:3.5.0:java \
+              -Dexec.mainClass="$cls" -Dexec.classpathScope=test
           done
