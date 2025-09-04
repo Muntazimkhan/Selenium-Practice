@@ -10,7 +10,7 @@ import java.time.Duration;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.alertIsPresent;
 
-public class foodVarieties {
+public class FoodVarieties {
     public static void main(String[] args) {
         WebDriver driver = null;
 

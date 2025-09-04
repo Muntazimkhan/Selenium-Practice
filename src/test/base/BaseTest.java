@@ -12,26 +12,37 @@ public class BaseTest {
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions opts = new ChromeOptions();
-        if (Boolean.parseBoolean(System.getenv().getOrDefault("HEADLESS","false"))) {
-            opts.addArguments("--headless=new","--no-sandbox","--disable-dev-shm-usage");
+
+        // Read system property for headless mode, default is normal (not headless)
+        String browserMode = System.getProperty("selenium.browser", "normal");
+        if ("headless".equalsIgnoreCase(browserMode)) {
+            opts.addArguments("--headless=new", "--no-sandbox", "--disable-dev-shm-usage");
         }
 
         WebDriver driver = new ChromeDriver(opts);
         driver.manage().window().maximize();
+        driver.manage().deleteAllCookies();
 
+        // Load dotenv for fallback environment variables (local dev)
         Dotenv env = Dotenv.load();
-        String loginUrl = env.get("LOGIN_URL", "https://panel.delmunch.com/login");
-        String email    = env.get("EMAIL");
-        String password = env.get("PASSWORD");
 
-        // 👉 Go to the login page BEFORE calling the helper
+        // First try system environment variables, fallback to .env values
+        String loginUrl = System.getenv().getOrDefault("LOGIN_URL", env.get("LOGIN_URL", "https://panel.delmunch.com/login"));
+        String email = System.getenv().getOrDefault("EMAIL", env.get("EMAIL"));
+        String password = System.getenv().getOrDefault("PASSWORD", env.get("PASSWORD"));
+
         driver.get(loginUrl);
 
         LoginHelper.login(driver, email, password);
+
         return driver;
     }
 
     public static void quit(WebDriver driver) {
-        if (driver != null) try { driver.quit(); } catch (Exception ignored) {}
+        if (driver != null) {
+            try {
+                driver.quit();
+            } catch (Exception ignored) {}
+        }
     }
 }

@@ -39,7 +39,7 @@
             <version>2.0.16</version>
         </dependency>
 
-        <!-- Dotenv support -->
+        <!-- Dotenv -->
         <dependency>
             <groupId>io.github.cdimascio</groupId>
             <artifactId>dotenv-java</artifactId>
@@ -53,17 +53,20 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.13.0</version>
+                <version>3.11.0</version>
                 <configuration>
                     <release>${maven.compiler.release}</release>
                 </configuration>
             </plugin>
 
-            <!-- Exec plugin to dynamically run classes -->
+            <!-- Run main class -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>3.1.0</version>
+                <configuration>
+                    <mainClass>test.MasterTestRunner</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>

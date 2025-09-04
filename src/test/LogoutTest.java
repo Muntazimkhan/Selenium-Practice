@@ -8,7 +8,7 @@ import test.base.BaseTest;
 
 import java.time.Duration;
 
-public class logoutTest {
+public class LogoutTest {
     public static void main(String[] args) {
         WebDriver driver = null;
 

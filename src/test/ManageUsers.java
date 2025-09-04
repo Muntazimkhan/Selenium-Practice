@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.Random;
 
-public class manageUsers {
+public class ManageUsers {
     public static void main(String[] args) {
         WebDriver driver = null;
         try {
