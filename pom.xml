@@ -26,10 +26,17 @@
             <artifactId>webdrivermanager</artifactId>
             <version>5.6.3</version>
         </dependency>
+
+        <!-- Dotenv support -->
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>3.0.2</version>
+        </dependency>
     </dependencies>
 
     <build>
-        <sourceDirectory>src/test</sourceDirectory> <!-- ✅ Tell Maven where your code is -->
+        <sourceDirectory>src/test</sourceDirectory> <!-- Tell Maven where your code is -->
 
         <plugins>
             <!-- Compiler Plugin -->
@@ -54,7 +61,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>MasterTestRunner</mainClass> <!-- ✅ Match exactly, no package prefix -->
+                    <mainClass>MasterTestRunner</mainClass> <!-- Match exactly, no package prefix -->
                 </configuration>
             </plugin>
         </plugins>
