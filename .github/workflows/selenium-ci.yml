@@ -30,13 +30,7 @@ jobs:
         sudo apt update
         sudo apt install -y google-chrome-stable
 
-    - name: Setup ChromeDriver
-      run: |
-        CHROME_VERSION=$(google-chrome-stable --version | grep -oP '\d+\.\d+\.\d+')
-        wget -q "https://chromedriver.storage.googleapis.com/${CHROME_VERSION}/chromedriver_linux64.zip" -O chromedriver.zip
-        unzip chromedriver.zip
-        sudo mv chromedriver /usr/local/bin/
-        sudo chmod +x /usr/local/bin/chromedriver
+    # Removed the ChromeDriver setup step
 
     - name: Build and run tests with Maven (headless)
       run: mvn clean test -Dselenium.browser=headless
