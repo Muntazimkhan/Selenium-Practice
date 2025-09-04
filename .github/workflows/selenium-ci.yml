@@ -1,10 +1,12 @@
-name: Daily Selenium CI
+name: Daily + Push Selenium CI
 
 on:
-  push:          # Run on every push
-  schedule:      # Run every day at 10:00 AM PKT (5:00 AM UTC)
-    - cron: '0 5 * * *'
-  workflow_dispatch: # Allow manual trigger
+  push:
+    branches:
+      - master  # Change if your branch is 'main'
+  schedule:
+    - cron: '0 5 * * *'  # 10:00 AM Pakistan Time = 5:00 AM UTC
+  workflow_dispatch:     # Manual trigger option
 
 jobs:
   run-selenium-tests:
