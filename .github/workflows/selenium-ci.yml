@@ -1,22 +1,16 @@
-name: Run Selenium Tests
+name: Daily Selenium CI
 
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+  schedule:
+    - cron: '0 0 * * *' # Every day at midnight UTC
+  workflow_dispatch:    # Allows manual trigger
 
 jobs:
-  build:
+  run-selenium-tests:
     runs-on: ubuntu-latest
 
-    env:
-      EMAIL: ${{ secrets.EMAIL }}
-      PASSWORD: ${{ secrets.PASSWORD }}
-      LOGIN_URL: ${{ secrets.LOGIN_URL }}
-
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v3
 
     - name: Set up JDK 17
@@ -26,11 +20,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Install Chrome
-      run: |
-        sudo apt update
-        sudo apt install -y google-chrome-stable
+      uses: browser-actions/setup-chrome@v1
 
-    # Removed the ChromeDriver setup step
-
-    - name: Build and run tests with Maven (headless)
-      run: mvn clean test -Dselenium.browser=headless
+    - name: Run Selenium tests
+      run: mvn compile exec:java
