@@ -34,4 +34,4 @@ jobs:
         uses: browser-actions/setup-chrome@v1
 
       - name: Run Selenium tests
-        run: mvn clean test
+        run: mvn clean test  # This runs your tests correctly
