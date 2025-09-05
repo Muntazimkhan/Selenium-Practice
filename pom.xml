@@ -58,7 +58,7 @@
     </dependencies>
 
     <build>
-        <sourceDirectory>src/test</sourceDirectory> <!-- Tell Maven where your code is -->
+        <sourceDirectory>src/test/java</sourceDirectory> <!-- Tell Maven where your code is -->
 
         <plugins>
             <!-- Compiler Plugin -->
@@ -83,7 +83,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>MasterTestRunner</mainClass> <!-- Match exactly, no package prefix -->
+                    <mainClass>com.example.runner.MasterTestRunner</mainClass> <!-- Full package path -->
                 </configuration>
             </plugin>
         </plugins>

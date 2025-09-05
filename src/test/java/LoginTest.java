@@ -1,7 +1,7 @@
 package test;
 
 import org.openqa.selenium.WebDriver;
-import test.base.BaseTest;
+import base.BaseTest;
 
 public class LoginTest {
     public static void main(String[] args) {

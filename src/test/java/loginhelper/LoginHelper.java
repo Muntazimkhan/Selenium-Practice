@@ -1,4 +1,4 @@
-package test.loginhelper;
+package loginhelper;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;

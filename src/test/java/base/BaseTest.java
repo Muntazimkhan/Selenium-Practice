@@ -1,11 +1,11 @@
-package test.base;
+package base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import test.loginhelper.LoginHelper;
+import loginhelper.LoginHelper;
 
 public class BaseTest {
     public static WebDriver createLoggedInDriver() {

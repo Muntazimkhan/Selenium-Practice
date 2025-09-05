@@ -22,8 +22,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
       - name: Install Chrome
         uses: browser-actions/setup-chrome@v1
 
       - name: Run Selenium tests
-        run: mvn clean compile exec:java
+        run: mvn clean test
