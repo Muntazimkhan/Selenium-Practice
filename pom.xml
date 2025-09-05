@@ -17,22 +17,44 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.15.0</version>
+            <version>4.15.0</version> <!-- Latest version -->
         </dependency>
 
-        <!-- WebDriverManager -->
+        <!-- WebDriverManager to automatically manage ChromeDriver version -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>5.6.3</version>
         </dependency>
 
-        <!-- Dotenv support -->
+        <!-- Dotenv support for environment variables -->
         <dependency>
             <groupId>io.github.cdimascio</groupId>
             <artifactId>dotenv-java</artifactId>
             <version>3.0.2</version>
         </dependency>
+
+        <!-- SLF4J API for logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.0-alpha1</version> <!-- Latest version -->
+        </dependency>
+
+        <!-- SLF4J Simple Binding (to enable logging output) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.0-alpha1</version> <!-- Latest version -->
+        </dependency>
+
+        <!-- Logback Classic for actual logging -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.11</version>  <!-- Latest version -->
+        </dependency>
+
     </dependencies>
 
     <build>

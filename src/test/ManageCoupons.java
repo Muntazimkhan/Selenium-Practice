@@ -1,9 +1,6 @@
 package test;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -22,6 +19,8 @@ public class ManageCoupons {
             navigateToCouponsPage(wait, driver);
             // Add New Coupon
             addNewCoupon(wait, driver);
+            // Delete Coupon
+            DeleteCoupon(wait, driver);
 
 
         } catch (Exception e) {
@@ -50,7 +49,7 @@ public class ManageCoupons {
         System.out.println("Add New Coupon clicked");
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[name='code']"))).sendKeys("ABCD1234");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[name='discount_amount']"))).sendKeys("110");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[name='discount_amount']"))).sendKeys("11");
 
 
         //Add Validity Date From
@@ -99,6 +98,12 @@ public class ManageCoupons {
 
     // Delete coupon
     public static void DeleteCoupon(WebDriverWait wait, WebDriver driver){
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[type='search']"))).sendKeys("ABCD1234");
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn.btn-danger.btn-sm"))).click();
+        // Handle alert for delete confirmation
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        alert.accept();
+        System.out.println("Coupon deleted.");
 
 
 
